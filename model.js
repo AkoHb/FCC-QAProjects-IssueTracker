@@ -1,35 +1,22 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const stringValidation = ({ min = 2, max = 25 } = {}) => {
-    if (
-        typeof min !== "number" ||
-        typeof max !== "number" ||
-        min < 2 ||
-        max <= min
-    ) {
-        return {
-            type: String,
-            required: true,
-            trim: true,
-        };
-    } else {
-        return {
-            type: String,
-            required: true,
-            trim: true,
-            minLength: min,
-            maxLength: max,
-        };
-    }
-};
+const { stringValidation } = require("./validators/stringValidation");
+const {
+    allowedStatuses,
+    maxStringLength,
+    defaultIssueTitleLength,
+    defaultCreatedByLength,
+    defaultAssignedToLength,
+} = require("./config/constants");
+
 
 const IssueNote = new Schema({
     issue_title: {
-        ...stringValidation(),
+        ...stringValidation(defaultIssueTitleLength),
     },
     issue_text: {
-        ...stringValidation({ max: 150 }),
+        ...stringValidation({ max: maxStringLength }),
     },
     created_data: {
         type: Date,
@@ -40,10 +27,10 @@ const IssueNote = new Schema({
         default: Date.now,
     },
     created_by: {
-        ...stringValidation({ max: 15 }),
+        ...stringValidation({ max: defaultCreatedByLength }),
     },
     assigned_to: {
-        ...stringValidation({ max: 20 }),
+        ...stringValidation({ max: defaultAssignedToLength }),
     },
     open: {
         type: Boolean,
@@ -51,7 +38,7 @@ const IssueNote = new Schema({
     },
     status_text: {
         type: String,
-        enum: ["New", "Assigned", "In Progress (Accepted)", "Fixed"],
+        enum: allowedStatuses,
         default: "New",
     },
 });
