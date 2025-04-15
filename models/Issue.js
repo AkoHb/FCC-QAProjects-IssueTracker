@@ -10,7 +10,6 @@ const {
     defaultAssignedToLength,
 } = require("./config/constants");
 
-
 const IssueNote = new Schema({
     issue_title: {
         ...stringValidation(defaultIssueTitleLength),
@@ -45,11 +44,4 @@ const IssueNote = new Schema({
 
 const Issue = mongoose.model("Issue", IssueNote);
 
-const ProjectData = new Schema({
-    name: { ...stringValidation() },
-    issue: [{ type: Schema.Types.ObjectId, ref: "Issue" }],
-});
-
-const Project = mongoose.model("Project", ProjectData);
-
-module.exports = { Issue, Project };
+module.exports = { Issue };
