@@ -28,7 +28,7 @@ module.exports = function (app) {
             } = req.query;
 
             const queryParams = {
-                ...(_id && { _id: ObjectId(_id) }),
+                ...(_id && { _id: ObjectId(req?.body?._id) }),
                 ...(open && { open: open }),
                 ...(issue_title && { issue_title: issue_title }),
                 ...(issue_text && { issue_text: issue_text }),

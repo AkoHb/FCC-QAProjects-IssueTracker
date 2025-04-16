@@ -4,11 +4,11 @@
 
 const FCC_ANSWERS = {
     DELETE: {
-        success: (req) => ({ result: "successfully deleted", '_id': req.body._id }),
+        success: (req) => ({ result: "successfully deleted", '_id': req?.body?._id }),
     },
     GET: {},
     PUT: {
-        success: (req) => ({ result: "successfully updated", '_id': req.body._id }),
+        success: (req) => ({ result: "successfully updated", '_id': req?.body?._id }),
     },
     POST: {},
 };
@@ -18,18 +18,18 @@ const FCC_ANSWERS = {
  */
 const devOpsAnswers = {
     DELETE: {
-        success: (req) => ({ result: "Issue deleted", _id: req.body._id }),
+        success: (req) => ({ result: "Issue deleted", _id: req?.body?._id }),
     },
     GET: {
-        success: (req) => ({ result: "Issues retrieved", data: req.body }),
+        success: (req) => ({ result: "Issues retrieved", data: req?.body }),
     },
     PUT: {
-        success: (req) => ({ result: "Issue updated", _id: req.body._id }),
+        success: (req) => ({ result: "Issue updated", _id: req?.body?._id }),
     },
     POST: {
         success: (req) => ({
             result: "Issue created",
-            issue: req.body
+            issue: req?.body
         }),
     },
 };

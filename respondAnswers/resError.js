@@ -5,15 +5,15 @@
 const FCC_ANSWERS = {
     DELETE: {
         missing_id: { error: "missing _id" },
-        could_not_delete: (req) => ({ error: "could not delete", '_id': req.body._id }),
+        could_not_delete: (req) => ({ error: "could not delete", '_id': req?.body?._id }),
     },
     GET: {},
     PUT: {
         missing_id: { error: "missing _id" },
-        could_not_update: (req) => ({ error: "could not update", '_id': req.body._id }),
+        could_not_update: (req) => ({ error: "could not update", '_id': req?.body?._id }),
         no_update_fields: (req) => ({
             error: "no update field(s) sent",
-            _id: req.body._id,
+            _id: req?.body?._id,
         }),
     },
     POST: {
