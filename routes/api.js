@@ -6,10 +6,12 @@ const express = require("express");
 
 const validateQueryParams = require("../models/validators/validateQueryParams");
 const requestLogger = require("../middleware/requestLogger");
+const resHelper = require("../middleware/resHelper");
 
 module.exports = function (app) {
     app.use(express.json());
     app.use(requestLogger);
+    app.use(resHelper);
 
     app.route("/api/issues/:project")
 
@@ -43,18 +45,18 @@ module.exports = function (app) {
                 ]);
 
                 if (!data || data.length === 0) {
-                    res.json([]);
+                    res.sendOk("GET:no_data");
+                    return res.json([]); 
                 } else {
                     let mappedData = data.map((item) => item.issues);
-                    res.json(mappedData);
+                    res.sendOk("GET:success", mappedData); 
+                    return res.json(mappedData); 
                 }
             } catch (err) {
-                res.status(500).json({
-                    error: "Failed to fetch issues",
-                    details: err.message,
-                });
+                res.sendErr("GET:fetch_error", 500); 
+                return res.json({ error: "Failed to fetch issues", details: err.message }); 
             } finally {
-                await requestLogger(req, res);
+                await requestLogger(req, res); 
             }
         })
 
